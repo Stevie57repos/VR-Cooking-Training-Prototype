@@ -28,6 +28,7 @@ public class BreadSpawner : ToppingsSpawner
     {
         GameObject breadBaseObject = Instantiate(BreadBasePrefab, orientation.position, orientation.rotation);
         breadBase = breadBaseObject.GetComponent<SandwhichHandler>();
+        breadBase.BreadSpawner = this;
         return breadBaseObject.GetComponent<XRGrabInteractable>();
     }
 }

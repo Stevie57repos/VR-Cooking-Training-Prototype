@@ -36,8 +36,7 @@ public class SandwhichToppingHandler : XRGrabInteractable
             {   
                 SandwhichHandler otherSandwhichHandler = other.gameObject.GetComponent<SandwhichHandler>();
                 otherSandwhichHandler.AddTopping(myType.ToString());
-                if (!otherSandwhichHandler.isComplete)
-                    Destroy(this.gameObject);
+                Destroy(this.gameObject);
             }
         }
     }

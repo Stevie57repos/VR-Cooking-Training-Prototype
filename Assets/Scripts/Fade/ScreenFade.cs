@@ -8,6 +8,7 @@ public class ScreenFade : MonoBehaviour
     public ForwardRendererData rendererData = null;
 
     // Settings
+    [Range(0, 1)] public float alpha = 1.0f;
     [Range(0, 5)] public float duration = 0.5f;
 
     // Runtime
@@ -37,13 +38,21 @@ public class ScreenFade : MonoBehaviour
     {
         // Fade to black
         Tween.ShaderFloat(fadeMaterial, "_Alpha", 1, duration, 0);
-        return duration;
+        return (duration) ;
     }
-
     public float FadeOut()
     {
         // Fade to clear
         Tween.ShaderFloat(fadeMaterial, "_Alpha", 0, duration, 0);
         return duration;
     }
+    public void FadeInOnly()
+    {
+        Tween.ShaderFloat(fadeMaterial, "_Alpha", 1, duration, 0);
+    }
+    public void FadeOutOnly()
+    {
+        Tween.ShaderFloat(fadeMaterial, "_Alpha", 0, duration, 0);
+    }
+
 }

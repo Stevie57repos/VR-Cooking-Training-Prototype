@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 7262376131007261542}
   - component: {fileID: 1799671003447165455}
   - component: {fileID: 6723318410809011621}
-  - component: {fileID: 111485660037647664}
   - component: {fileID: 1937183014072073586}
+  - component: {fileID: 6107000272915601834}
+  - component: {fileID: 4562255658423895520}
   m_Layer: 0
   m_Name: BreadBase
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6399034987161950260}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.077, y: 0.529, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1713646, y: 0.013190697, z: 0.23742086}
   m_Children: []
   m_Father: {fileID: 0}
@@ -109,12 +110,12 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &6723318410809011621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,7 +138,9 @@ MonoBehaviour:
   _BreadToppingPrefab: {fileID: 4436327261091281458, guid: 1b46ba934e72fbc47b722a61907cee03, type: 3}
   CurrentToppings: []
   TestSandwhich: []
---- !u!114 &111485660037647664
+  BreadSpawner: {fileID: 0}
+  isOnGround: 0
+--- !u!114 &1937183014072073586
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,7 +149,46 @@ MonoBehaviour:
   m_GameObject: {fileID: 6399034987161950260}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
+  m_Script: {fileID: 11500000, guid: 04efcab046c2d324cacc5071814f3595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6107000272915601834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6399034987161950260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1d6ade9294195e4aa1119b1af67f99f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onTimerEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6723318410809011621}
+        m_TargetAssemblyTypeName: SandwhichHandler, Assembly-CSharp
+        m_MethodName: DestroySandwhich
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4562255658423895520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6399034987161950260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2854f35cb0ed0241ac5142c1f402984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -243,15 +285,3 @@ MonoBehaviour:
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1
   m_AttachPointCompatibilityMode: 0
---- !u!114 &1937183014072073586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6399034987161950260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04efcab046c2d324cacc5071814f3595, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

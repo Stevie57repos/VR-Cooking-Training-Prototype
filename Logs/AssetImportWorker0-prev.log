@@ -15,12 +15,12 @@ D:/Unity Projects/VR Cooking Training Prototype
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-50740
+59352
 Successfully changed project path to: D:/Unity Projects/VR Cooking Training Prototype
 D:/Unity Projects/VR Cooking Training Prototype
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 100.82 ms, found 10 plugins.
-Preloading 1 native plugins for Editor in 2.13 ms.
+Refreshing native plugins compatible for Editor in 152.16 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 1.74 ms.
 Initialize engine version: 2020.3.12f1 (b3b2c6512326)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path D:/Unity Projects/VR Cooking Training Prototype/Assets
@@ -35,5 +35,5 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56316
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56144
 Begin MonoManager ReloadAssembly

@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
+
+public class CanonLoader : MonoBehaviour
+{
+    public CanonHandler Canon;
+    [SerializeField] AudioSource _canonLoader;
+    [SerializeField] AudioClip _LoadCanonClip;
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.GetComponent<CanonProjectile>())
+        {
+            Canon.AddToQueue(other.gameObject);
+            _canonLoader.PlayOneShot(_LoadCanonClip);
+        }
+    }
+}
