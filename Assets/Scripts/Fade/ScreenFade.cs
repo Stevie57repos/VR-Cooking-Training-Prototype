@@ -5,54 +5,44 @@ using Pixelplacement;
 public class ScreenFade : MonoBehaviour
 {
     // References
-    public ForwardRendererData rendererData = null;
+    public ForwardRendererData RendererData = null;
 
     // Settings
-    [Range(0, 1)] public float alpha = 1.0f;
-    [Range(0, 5)] public float duration = 0.5f;
+    [Range(0, 1)] public float Alpha = 1.0f;
+    [Range(0, 5)] public float Duration = 0.5f;
 
     // Runtime
-    private Material fadeMaterial = null;
+    private Material FadeMaterial = null;
 
     private void Start()
     {
-        // Find the, and set the feature's material
         SetupFadeFeature();
     }
 
     private void SetupFadeFeature()
     {
         // Look for the screen fade feature
-        ScriptableRendererFeature feature = rendererData.rendererFeatures.Find(item => item is ScreenFadeFeature);
+        ScriptableRendererFeature feature = RendererData.rendererFeatures.Find(item => item is ScreenFadeFeature);
 
         // Ensure it's the correct feature
         if (feature is ScreenFadeFeature screenFade)
         {
             // Duplicate material so we don't change the renderer's asset
-            fadeMaterial = Instantiate(screenFade.settings.material);
-            screenFade.settings.runTimeMaterial = fadeMaterial;
+            FadeMaterial = Instantiate(screenFade.Settings.material);
+            screenFade.Settings.runTimeMaterial = FadeMaterial;
         }
     }
 
     public float FadeIn()
     {
         // Fade to black
-        Tween.ShaderFloat(fadeMaterial, "_Alpha", 1, duration, 0);
-        return (duration) ;
+        Tween.ShaderFloat(FadeMaterial, "_Alpha", 1, Duration, 0);
+        return (Duration) ;
     }
     public float FadeOut()
     {
         // Fade to clear
-        Tween.ShaderFloat(fadeMaterial, "_Alpha", 0, duration, 0);
-        return duration;
+        Tween.ShaderFloat(FadeMaterial, "_Alpha", 0, Duration, 0);
+        return Duration;
     }
-    public void FadeInOnly()
-    {
-        Tween.ShaderFloat(fadeMaterial, "_Alpha", 1, duration, 0);
-    }
-    public void FadeOutOnly()
-    {
-        Tween.ShaderFloat(fadeMaterial, "_Alpha", 0, duration, 0);
-    }
-
 }

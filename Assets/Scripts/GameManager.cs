@@ -12,7 +12,7 @@ namespace GameManagerNameSpace
         public bool isLoadLevel;
         public bool unlimitedTime;
 
-        [Header("Level settings")]
+        [Header("Level Settings")]
         public ScreenFade screenFade = null;
         public Scene currentScene;
         public float levelDuration = 60f;
@@ -20,8 +20,10 @@ namespace GameManagerNameSpace
         public Animator GateAnimator;
 
         [Header("Events")]
-        public GameManagerEventChannelSO Startbutton;
-        public GameManagerEventChannelSO QuitButton;
+        [SerializeField] private GameManagerEventChannelSO Startbutton;
+        [SerializeField] private GameManagerEventChannelSO QuitButton;
+        [SerializeField] private GameManagerEventChannelSO LevelLoaded;
+        [SerializeField] private GameManagerEventChannelSO EndLevelLoaded;
 
         [Header("Audio")]
         public AudioSource BGAudioSource;
@@ -81,7 +83,7 @@ namespace GameManagerNameSpace
             yield return new WaitForSeconds(1f);
             yield return StartCoroutine(LoadScene("Level"));
             SceneManager.SetActiveScene(SceneManager.GetSceneByName("Level"));
-
+            LevelLoaded.RaiseEvent();
             yield return screenFade.FadeOut();
             GateAnimator.SetTrigger("GameStart");
             yield return new WaitForSeconds(2f);
@@ -122,6 +124,7 @@ namespace GameManagerNameSpace
             yield return UnloadCurrent();
             yield return LoadScene("GameEndUI");
             SceneManager.SetActiveScene(SceneManager.GetSceneByName("GameEndUI"));
+            EndLevelLoaded.RaiseEvent();
             yield return screenFade.FadeOut();
         }
         private void QuitGame()

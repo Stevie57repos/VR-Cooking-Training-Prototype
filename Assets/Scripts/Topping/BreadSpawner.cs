@@ -8,11 +8,29 @@ public class BreadSpawner : ToppingsSpawner
 {
     public GameObject BreadBasePrefab;
     public SandwichHandler breadBase ;
-    [SerializeField] private List<GameObject> _BreadBaseList = new List<GameObject>();
+    [SerializeField] private List<GameObject> _BreadBasePool = new List<GameObject>();
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        _levelLoaded.GameManagerEvent += CreateBreadBasePool;
+        _EndLevelLoaded.GameManagerEvent += ClearBreadBasePool;
+    }
+
+    protected override void OnDisable()
+    {
+        _levelLoaded.GameManagerEvent -= CreateBreadBasePool;
+        _EndLevelLoaded.GameManagerEvent -= ClearBreadBasePool;
+        base.OnDisable();
+    }
+    private void ClearBreadBasePool()
+    {
+        _BreadBasePool.Clear();
+    }
     protected override void Awake()
     {
         base.Awake();
-        CreateBreadBasePool();
+        //CreateBreadBasePool();     
     }
     private void CreateBreadBasePool()
     {
@@ -20,7 +38,7 @@ public class BreadSpawner : ToppingsSpawner
         {
             GameObject breadBaseGO = Instantiate(BreadBasePrefab);
             breadBaseGO.SetActive(false);
-            _BreadBaseList.Add(breadBaseGO);
+            _BreadBasePool.Add(breadBaseGO);
         }
     }
     protected override void CreateAndSelectTopping(SelectEnterEventArgs args)
@@ -42,14 +60,14 @@ public class BreadSpawner : ToppingsSpawner
     }
     private GameObject RetrieveBreadBase(Transform orientation)
     {
-        for (int i = 0; i < _BreadBaseList.Count; i++)
+        for (int i = 0; i < _BreadBasePool.Count; i++)
         {
-            if (!_BreadBaseList[i].activeInHierarchy)
+            if (!_BreadBasePool[i].activeInHierarchy)
             {
-                _BreadBaseList[i].transform.position = orientation.position;
-                _BreadBaseList[i].transform.rotation = orientation.rotation;
-                _BreadBaseList[i].SetActive(true);
-                return _BreadBaseList[i];
+                _BreadBasePool[i].transform.position = orientation.position;
+                _BreadBasePool[i].transform.rotation = orientation.rotation;
+                _BreadBasePool[i].SetActive(true);
+                return _BreadBasePool[i];
             }
             else
                 Debug.Log($"Nothing left in the pool");

@@ -1,21 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class BreadBaseGrabHandler : XRGrabInteractable
 {
-    SandwichHandler sandwhichHandler;
-
+    private SandwichHandler _sandwhichHandler;
     protected override void Awake()
     {
         base.Awake();
-        sandwhichHandler = GetComponent<SandwichHandler>();
+        _sandwhichHandler = GetComponent<SandwichHandler>();
     }
 
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
         base.OnSelectEntered(args);
-        sandwhichHandler.PickedUp();
+        _sandwhichHandler.PickedUp();
     }
 }

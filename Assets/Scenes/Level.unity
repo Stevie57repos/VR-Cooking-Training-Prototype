@@ -1334,7 +1334,7 @@ GameObject:
   - component: {fileID: 998212137}
   - component: {fileID: 998212136}
   m_Layer: 0
-  m_Name: Customer Manager
+  m_Name: Customer Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1365,10 +1365,8 @@ MonoBehaviour:
   - {fileID: 2033666286}
   - {fileID: 761353004}
   - {fileID: 1504696656}
-  _usedSpawnLocations: 
   _availableSpawnLocations: 
-  _usedSpawnLocations2: 
-  PlayerScoreSO: {fileID: 11400000, guid: d4b21b6bbb3d4544187a4ed1c2c1e8e7, type: 2}
+  _playerScoreSO: {fileID: 11400000, guid: d4b21b6bbb3d4544187a4ed1c2c1e8e7, type: 2}
 --- !u!4 &998212137
 Transform:
   m_ObjectHideFlags: 0

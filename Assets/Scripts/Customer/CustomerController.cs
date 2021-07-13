@@ -8,11 +8,12 @@ public class CustomerController : MonoBehaviour
     [SerializeField] private GameObject _customerPrefab;
     [SerializeField] private List<Transform> _customerSpawnLocations = new List<Transform>();
     [SerializeField] private List<int> _availableSpawnLocations = new List<int>();
+    [SerializeField] private List<int> _usedSpawnLocations = new List<int>();
 
     private Queue<Customer> _customerQueue = new Queue<Customer>();
-    private int _initialSpawnCount = 6;
+    private int _initialSpawnCount = 12;
 
-    public PlayerScore PlayerScoreSO;
+    [SerializeField] PlayerScore _playerScoreSO;
 
     private void Awake()
     {
@@ -41,17 +42,46 @@ public class CustomerController : MonoBehaviour
     }
     public void SpawnCustomer()
     {
-        UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
-        int randomLocation = _availableSpawnLocations[UnityEngine.Random.Range(0, _availableSpawnLocations.Count - 1)];
-        Debug.Log($" randomlocation is {randomLocation}");
-        GameObject customerGO = Instantiate(_customerPrefab, _customerSpawnLocations[randomLocation]);
-        Customer newCustomer = customerGO.GetComponent<Customer>();
-        newCustomer.CustController = this;
-        newCustomer.SpawnLocation = randomLocation;
-        customerGO.SetActive(false);
-        _customerQueue.Enqueue(newCustomer);      
-        _availableSpawnLocations.RemoveAt(randomLocation);
+        if(_usedSpawnLocations.Count < _availableSpawnLocations.Count)
+        {
+            UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
+            //int randomLocation = _availableSpawnLocations[UnityEngine.Random.Range(0, (_availableSpawnLocations.Count - 1))];
+            int randomLocation = _availableSpawnLocations[RandomNumber(_availableSpawnLocations.Count)];
+            Debug.Log($" randomlocation is {randomLocation}");
+            CheckAvailableLocations(ref randomLocation);
+            GameObject customerGO = Instantiate(_customerPrefab, _customerSpawnLocations[randomLocation]);
+            Customer newCustomer = customerGO.GetComponent<Customer>();
+            newCustomer.CustController = this;
+            newCustomer.SpawnLocation = randomLocation;
+            customerGO.SetActive(false);
+            _customerQueue.Enqueue(newCustomer);
+            //_availableSpawnLocations.RemoveAt(randomLocation);
+        }
+        else
+        {
+            Debug.Log($"No more spawn are possible");
+        }
     }
+
+    private void CheckAvailableLocations(ref int randomLocation)
+    {
+        if (_usedSpawnLocations.Contains(randomLocation))
+        {
+            randomLocation = RandomNumber(_availableSpawnLocations.Count);
+            CheckAvailableLocations(ref randomLocation);
+        }
+        else
+            _usedSpawnLocations.Add(randomLocation);
+    }
+
+    private int RandomNumber(int count)
+    {
+        int max = count;
+        int number = UnityEngine.Random.Range(0, max);
+        return number;
+    }
+
+
     public void ActivateCustomer()
     {
         if(_customerQueue.Count == 0)
@@ -61,7 +91,7 @@ public class CustomerController : MonoBehaviour
         }
         var customer = _customerQueue.Dequeue();
         customer.gameObject.SetActive(true);
-        PlayerScoreSO.DisplayCustomerOrder(customer);
+        _playerScoreSO.DisplayCustomerOrder(customer);
     }
     public void ReleaseSpawnLocation(int location)
     {

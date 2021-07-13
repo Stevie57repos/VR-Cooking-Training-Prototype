@@ -128,10 +128,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d9249c7199e3a499b7265d471a0baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sandwhichSO: {fileID: 0}
-  toppingCount: 0
   isComplete: 0
-  toppingHeight: 1.6
+  _toppingHeight: 1.6
+  _DebugSandwichSO: {fileID: 0}
+  toppingCount: 0
   _lettucePrefab: {fileID: 196677278918907023, guid: ecebdf69c91a89740931028bf81c8ac3, type: 3}
   _tomatoesPrefab: {fileID: 506186634933875500, guid: 22808aa81649bf64989b33c89ecdf966, type: 3}
   _hamPrefab: {fileID: 7049890389470586841, guid: 80630e4fb72ffa445af45b63827b3990, type: 3}

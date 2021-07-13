@@ -29,8 +29,8 @@ public class ScreenFadePractice : MonoBehaviour
         if(feature is ScreenFadeFeature screenFade)
         {
             // Duplicate material so we don't change the renderer's asset
-            fadeMaterial = Instantiate(screenFade.settings.material);
-            screenFade.settings.runTimeMaterial = fadeMaterial;
+            fadeMaterial = Instantiate(screenFade.Settings.material);
+            screenFade.Settings.runTimeMaterial = fadeMaterial;
         }
     }
 

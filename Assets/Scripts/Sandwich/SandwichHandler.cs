@@ -7,7 +7,7 @@ public class SandwichHandler : MonoBehaviour
 {
     [Header("Toppings Check")]
     public bool isComplete = false;
-    [SerializeField] float toppingHeight;
+    [SerializeField] float _toppingHeight;
     [SerializeField] SandwichSO _DebugSandwichSO;
     public int toppingCount = 0;
 
@@ -74,7 +74,7 @@ public class SandwichHandler : MonoBehaviour
             topping.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
             topping.SetActive(true);
             topping.transform.parent = this.gameObject.transform;   
-            topping.transform.localPosition = new Vector3(0, (toppingHeight * toppingCount), 0);            
+            topping.transform.localPosition = new Vector3(0, (_toppingHeight * toppingCount), 0);            
         }
     }
     private void OnCollisionEnter(Collision other)

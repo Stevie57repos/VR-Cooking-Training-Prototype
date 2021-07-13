@@ -11,22 +11,28 @@ public class ToppingsSpawner : XRBaseInteractable
     [SerializeField] private AudioClip _clip;
     [SerializeField] private List<GameObject> _toppingObjectPool = new List<GameObject>();
     [SerializeField] protected int _objectPoolAmount;
+    [SerializeField] protected GameManagerEventChannelSO _levelLoaded;
+    [SerializeField] protected GameManagerEventChannelSO _EndLevelLoaded;
     protected override void OnEnable()
     {
         base.OnEnable();
         selectEntered.AddListener(CreateAndSelectTopping);
         selectEntered.AddListener(PlaySound);
+        _levelLoaded.GameManagerEvent += CreateToppingObjectPool;
+        _EndLevelLoaded.GameManagerEvent += ClearObjectPool;
     }
+
     protected override void OnDisable()
     {      
         selectEntered.RemoveListener(CreateAndSelectTopping);
         selectEntered.RemoveListener(PlaySound);
+        _levelLoaded.GameManagerEvent -= CreateToppingObjectPool;
+        _EndLevelLoaded.GameManagerEvent -= ClearObjectPool;
         base.OnDisable();
     }
     protected override void Awake()
     {
         base.Awake();
-        CreateToppingObjectPool();
         CheckAudio();
     }
     private void CheckAudio()
@@ -42,6 +48,10 @@ public class ToppingsSpawner : XRBaseInteractable
             toppingGO.SetActive(false);
             _toppingObjectPool.Add(toppingGO);
         }
+    }
+    private void ClearObjectPool()
+    {
+        _toppingObjectPool.Clear();
     }
     protected virtual void CreateAndSelectTopping(SelectEnterEventArgs args)
     {

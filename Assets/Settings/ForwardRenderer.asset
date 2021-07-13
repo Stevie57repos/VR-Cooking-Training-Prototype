@@ -56,8 +56,8 @@ MonoBehaviour:
   m_Name: NewScreenFadeFeature
   m_EditorClassIdentifier: 
   m_Active: 1
-  settings:
+  Settings:
     isEnabled: 1
-    profilerTag: Screen Fade
+    ProfilerTag: Screen Fade
     renderPassEvent: 600
     material: {fileID: 2100000, guid: cf5c108c099315f43850c5df335a49f5, type: 2}

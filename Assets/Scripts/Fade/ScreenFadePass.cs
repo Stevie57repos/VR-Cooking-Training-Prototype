@@ -14,7 +14,7 @@ public class ScreenFadePass : ScriptableRenderPass
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
     {
         // Set command to store instructions
-        CommandBuffer command = CommandBufferPool.Get(settings.profilerTag);
+        CommandBuffer command = CommandBufferPool.Get(settings.ProfilerTag);
 
         // Get the locations of our textures
         RenderTargetIdentifier source = BuiltinRenderTextureType.CameraTarget;

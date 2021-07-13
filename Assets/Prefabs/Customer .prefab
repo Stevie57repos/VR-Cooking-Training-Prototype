@@ -118,14 +118,14 @@ MonoBehaviour:
   CustController: {fileID: 0}
   OrderCompleteEvent: {fileID: 11400000, guid: d5223d7f0a7b50841a90c4f7cad5df08, type: 2}
   CustomerEffectsSound: {fileID: 11400000, guid: e164ed6fb48398d4aaa1fcaeab5e0f5a, type: 2}
-  characterPrefabs:
+  CharacterPrefabs:
   - {fileID: 6252356961377389083, guid: 2db03e7c8a8135146b280e5da7e0289c, type: 3}
   - {fileID: 7478225697116208144, guid: 6fb37f825ee63264b9c2600bf1a52006, type: 3}
   - {fileID: 7447163605589988728, guid: 907fd825e3988774caab4234b943bf44, type: 3}
-  PlayerScoreSO: {fileID: 11400000, guid: d4b21b6bbb3d4544187a4ed1c2c1e8e7, type: 2}
-  BaseValuesSO: {fileID: 11400000, guid: 5d84927ed5047334592e0644d1862106, type: 2}
-  _DebugSandwichSO: {fileID: 11400000, guid: dfc773613b46dad439d66a6479558ba1, type: 2}
-  CorrectOrderEffectSO: {fileID: 11400000, guid: 92fc1a258591d0f45a958bb0b099be90, type: 2}
+  _playerScoreSO: {fileID: 11400000, guid: d4b21b6bbb3d4544187a4ed1c2c1e8e7, type: 2}
+  _baseValuesSO: {fileID: 11400000, guid: 5d84927ed5047334592e0644d1862106, type: 2}
+  _debugSandwichSO: {fileID: 0}
+  _correctOrderEffectSO: {fileID: 11400000, guid: 92fc1a258591d0f45a958bb0b099be90, type: 2}
   SoundSuccess: {fileID: 8300000, guid: 82157d98b7ba3d642934fca0b32e8a9c, type: 3}
   SoundFail: {fileID: 8300000, guid: 333b3549da433bb4387bc1491bea53b3, type: 3}
 --- !u!1 &7362539096639909115
