@@ -5,103 +5,92 @@ using UnityEngine;
 
 public class Customer : MonoBehaviour
 {
-    [SerializeField] int _customerValue;
-    int minCustomerValue = 5;
-    [SerializeField] int _valuePerTopping;
-
-    [Range(1, 4)]
-    [SerializeField] int _minToppings;
-    [Range(1,4)]
-    public int _maxToppings;
-
+    [Header("Customer Values and Toppings settings")]
+    private int _customerValue;
     public List<string> SandwhichRequest = new List<string>();
-    public int wrongOrderCount = 0;
+    private int wrongOrderCount = 0;
     public List<string> ToppingsList = new List<string>() { "Lettuce", "Tomatoes", "Ham"};
-    
-    //public CustomerOrderUI OrderUI;
-    public IntEventChanelSO OrderCompleteEvent;
+    public int SpawnLocation;
     public CustomerController CustController;
 
-    [SerializeField] SandwhichSO _sandwhichSO;
-    public PlayerScore PlayerScoreSO;
+    [Header("Events")]
+    public IntEventChanelSO OrderCompleteEvent;
+    public AudioEventChannelSO CustomerEffectsSound;
 
+    [Header("Customer Models")]
     public List<GameObject> characterPrefabs = new List<GameObject>();
 
-    public int SpawnLocation;
-
-    private Rigidbody rb;
-
+    [Header("Scriptable Objects")]
+    public PlayerScore PlayerScoreSO;
+    public CustomerDefaultValuesSO BaseValuesSO;
+    public SandwichSO _DebugSandwichSO;
     public CorrectOrderEffect CorrectOrderEffectSO;
 
     [Header("Audio")]
-    public AudioEventChannelSO CustomerEffectsSound;
     public AudioClip SoundSuccess;
     public AudioClip SoundFail;
-
     private void Awake()
     {
-        if(_sandwhichSO == null)
+        if(_DebugSandwichSO == null)
             RequestRandomToppings();
         else
             LoadSandwhichSO();
 
-        //rb = GetComponent<Rigidbody>();
-
         LoadCharacterModel();
     }
-
     private void LoadCharacterModel()
     {
         UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
         int randomModel = UnityEngine.Random.Range(0, characterPrefabs.Count);
         Instantiate(characterPrefabs[randomModel], this.transform);
     }
-
     private void LoadSandwhichSO()
     {
-        if (_sandwhichSO.isLettuceOn)
-            SandwhichRequest.Add("Lettuce");
-        if (_sandwhichSO.isTomatoesOn)
-            SandwhichRequest.Add("Tomatoes");
-        if (_sandwhichSO.isHamOn)
-            SandwhichRequest.Add("Ham");
-        if (_sandwhichSO.isComplete)
-            SandwhichRequest.Add("Bread");
+        if (_DebugSandwichSO.ToppingsList.Count == 0)
+            _DebugSandwichSO.SetToppingList();
+        foreach(string topping in _DebugSandwichSO.ToppingsList)
+        {
+            if (topping != "Complete")
+                SandwhichRequest.Add(topping);
+            else
+                SandwhichRequest.Add("Bread");
+        }
     }
-
     private void RequestRandomToppings()
     {
         UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
-        int toppingNumber = UnityEngine.Random.Range(_minToppings, _maxToppings);
+        int toppingNumber = UnityEngine.Random.Range(BaseValuesSO.MinToppings, BaseValuesSO.MaxToppings);
         for(int i = 0; i < toppingNumber; i++)
         {
             int topping = UnityEngine.Random.Range(0, ToppingsList.Count);
             SandwhichRequest.Add(ToppingsList[topping]);
         }
-        _customerValue = minCustomerValue + (toppingNumber * _valuePerTopping);
+        _customerValue = BaseValuesSO.BaseCustomerValue + (toppingNumber * BaseValuesSO.BaseValuePerTopping);
     }
-
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.GetComponent<SandwhichHandler>())
+        SandwichHandler sandwhich = other.gameObject.GetComponent<SandwichHandler>();
+
+        if(sandwhich != null)
         {
-            if (CheckSandwhich(other.gameObject.GetComponent<SandwhichHandler>()))
+            if (CheckSandwhich(sandwhich))
             {
                 PlayerScoreSO.ChangeScore(_customerValue);
                 CustController.ReleaseSpawnLocation(SpawnLocation);
                 CustController.ActivateCustomer();
-                Destroy(other.gameObject);
-                Destroy(this.gameObject);
+                //Destroy(other.gameObject);
+                sandwhich.ResetSandwich();
                 CorrectOrderEffectSO.RaiseEvent(this.transform);
                 CustomerEffectsSound.RaiseEvent(SoundSuccess);
+                Destroy(this.gameObject);
             }
             else
             {
                 Debug.Log($"Wrong Order");
                 wrongOrderCount++;
                 CustomerEffectsSound.RaiseEvent(SoundFail);
-                Destroy(other.gameObject);
-                if(wrongOrderCount > 1)
+                sandwhich.ResetSandwich();
+                if (wrongOrderCount > 1)
                 {
                     CustController.ReleaseSpawnLocation(SpawnLocation);
                     CustController.ActivateCustomer();
@@ -110,8 +99,7 @@ public class Customer : MonoBehaviour
             }                       
         }
     }
-
-    private bool CheckSandwhich(SandwhichHandler sandwhich)
+    private bool CheckSandwhich(SandwichHandler sandwhich)
     {
         if (sandwhich.CurrentToppings.Count == 0)
             return false;

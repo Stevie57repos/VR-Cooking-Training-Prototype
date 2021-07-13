@@ -5,15 +5,15 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public enum ToppingType { Lettuce, Tomatoes, Ham, Bread, Cheese }
 
-public class SandwhichToppingHandler : XRGrabInteractable
+public class SandwichToppingHandler : XRGrabInteractable
 {
     public ToppingType myType;
-    SandwhichHandler mySandwhichHandler;
+    SandwichHandler mySandwhichHandler;
 
     protected override void Awake()
     {
         base.Awake();
-        mySandwhichHandler = GetComponent<SandwhichHandler>();
+        mySandwhichHandler = GetComponent<SandwichHandler>();
     }
 
     bool isHeld = false;
@@ -32,11 +32,12 @@ public class SandwhichToppingHandler : XRGrabInteractable
     {
         if (!isHeld)
         {
-            if (other.gameObject.GetComponent<SandwhichHandler>())
+            if (other.gameObject.GetComponent<SandwichHandler>())
             {   
-                SandwhichHandler otherSandwhichHandler = other.gameObject.GetComponent<SandwhichHandler>();
+                SandwichHandler otherSandwhichHandler = other.gameObject.GetComponent<SandwichHandler>();
                 otherSandwhichHandler.AddTopping(myType.ToString());
-                Destroy(this.gameObject);
+                //Destroy(this.gameObject);
+                this.gameObject.SetActive(false);
             }
         }
     }

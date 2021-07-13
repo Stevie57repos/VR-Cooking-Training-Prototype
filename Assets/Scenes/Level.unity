@@ -1352,7 +1352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac39d073c067794a8114ebe360faf14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CustomerPrefab: {fileID: 2741019888977566180, guid: ec8ff4f2ede4bab49a2c4671656aaa8e, type: 3}
+  _customerPrefab: {fileID: 2741019888977566180, guid: ec8ff4f2ede4bab49a2c4671656aaa8e, type: 3}
   _customerSpawnLocations:
   - {fileID: 453579004}
   - {fileID: 2065303549}
@@ -1365,7 +1365,9 @@ MonoBehaviour:
   - {fileID: 2033666286}
   - {fileID: 761353004}
   - {fileID: 1504696656}
-  UsedSpawnLocations: 
+  _usedSpawnLocations: 
+  _availableSpawnLocations: 
+  _usedSpawnLocations2: 
   PlayerScoreSO: {fileID: 11400000, guid: d4b21b6bbb3d4544187a4ed1c2c1e8e7, type: 2}
 --- !u!4 &998212137
 Transform:

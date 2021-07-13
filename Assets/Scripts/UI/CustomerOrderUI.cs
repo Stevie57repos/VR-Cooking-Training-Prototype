@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
 public class CustomerOrderUI : MonoBehaviour
 {
     public bool isOrderUp = false;
@@ -14,12 +13,6 @@ public class CustomerOrderUI : MonoBehaviour
 
     public PlayerScore PlayerScoreSO;
 
-    public void ChangeScore(int number)
-    {
-        PlayerScoreSO.Score += number;
-        InsertScore();
-    }
-
     private void Awake()
     {
         IngredientsBox = GetComponent<TextMeshProUGUI>();
@@ -28,10 +21,13 @@ public class CustomerOrderUI : MonoBehaviour
         scoreBox = GetComponent<TextMeshProUGUI>();
         if (scoreBox == null)
             scoreBox = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
-
         PlayerScoreSO.ScoreUI = this;
     }
-
+    public void ChangeScore(int number)
+    {
+        PlayerScoreSO.Score += number;
+        InsertScore();
+    }
     void InsertScore()
     {
         if(scoreBox == null)
@@ -41,7 +37,6 @@ public class CustomerOrderUI : MonoBehaviour
         }      
         scoreBox.text = $"<b><u>Score</b></u><br> ${PlayerScoreSO.Score}.00";
     }
-
     public void DisplayOrder(Customer customer)
     {      
         string displayText = "<u>Toppings Request</u><br>";

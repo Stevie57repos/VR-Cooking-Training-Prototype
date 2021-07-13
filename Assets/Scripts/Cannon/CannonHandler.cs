@@ -1,45 +1,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CanonHandler : MonoBehaviour
+public class CannonHandler : MonoBehaviour
 {
-    [SerializeField] GameObject _leverX;
-    [SerializeField] GameObject _leverZ;
-    float _leverMinRange = -50f;
-    float _cannonStartRotation = 45f;
+    [Header("Cannon Handles")]
+    [SerializeField] private GameObject _leverX;
+    [SerializeField] private GameObject _leverZ;
+    private float _leverMinRange = -50f;
+    private float _cannonStartRotation = 45f;
 
-    [SerializeField] Transform _spawnLocation;
-    [SerializeField] GameObject _projectilePrefab;
-    [SerializeField] float speed;
-    public Queue<GameObject> projectileQueue = new Queue<GameObject>();
+    [Header("Projectile Settings")]
+    [SerializeField] private Transform _spawnLocation;
+    [SerializeField] private GameObject _projectilePrefab;
+    [SerializeField] private float speed;
+    public Queue<GameObject> ProjectileQueue = new Queue<GameObject>();
 
+    [Header("Cannon Visual Aim Assist")]
     public LineRenderer CannonAimAssist;
     public GameObject StartLine;
     public GameObject EndLine;
-    bool isAimAssistOn;
 
+    [Header("Debugging/Testing ")]
     public bool isTestFiring = false;
     public GameObject sandwhichTestFiring;
-
     public GameManagerEventChannelSO fireCanon;
 
     [Header("Audio")]
     [SerializeField] AudioSource _canonAudioSource;
     [SerializeField] AudioClip _ExplosionClip;
-
     private void Awake()
     {
         _leverX.transform.rotation = Quaternion.identity;
         if(CannonAimAssist == null)
             CannonAimAssist = GetComponentInChildren<LineRenderer>();
-        isAimAssistOn = false;
     }
-
     private void OnEnable()
     {
         fireCanon.GameManagerEvent += LaunchProjectile;
     }
-
     private void OnDisable()
     {
         fireCanon.GameManagerEvent -= LaunchProjectile;
@@ -50,19 +48,16 @@ public class CanonHandler : MonoBehaviour
         CannonAimAssist.enabled = false;
         if (isTestFiring)
         {
-            ActivateAimAssist();
+            AimAssist();
         }
-
     }
-
     public void AddToQueue(GameObject projectile)
     {
-        isAimAssistOn = true;
-        projectileQueue.Enqueue(projectile);
+        ProjectileQueue.Enqueue(projectile);
         projectile.SetActive(false);
     }
 
-    void ActivateAimAssist()
+    void AimAssist()
     {
         CannonAimAssist.enabled = true;
         Vector3 startPos = _spawnLocation.transform.position;
@@ -82,32 +77,27 @@ public class CanonHandler : MonoBehaviour
             CannonAimAssist.SetPosition(1, endPos);
         }
     }
-
     void Update()
     {       
         UpdateCannonRotation();
     }
-
     private void UpdateCannonRotation()
     {
-        ActivateAimAssist();
+        AimAssist();
         var cannonRotationX = CheckLeverRotation(_leverX);
         var cannonRotationZ = CheckLeverRotation(_leverZ);   
         Vector3 calculateAngle = new Vector3(UpdateCanonRotationX(cannonRotationX), UpdateCanonRotationZ(cannonRotationZ), 0);
         Quaternion newAngle = Quaternion.Euler(calculateAngle);
         transform.rotation = newAngle;
     }
-
     Quaternion CheckLeverRotation(GameObject lever)
     {
         Quaternion CurrRotation = lever.transform.rotation;
         return CurrRotation;
     }
-
     float UpdateCanonRotationX(Quaternion angle)
     {
         Vector3 currAngle = angle.eulerAngles;
-
         if (currAngle.x >= 0 && currAngle.x < 300)
         {
             float leverPercentage = Mathf.Abs(currAngle.x / _leverMinRange);
@@ -121,7 +111,6 @@ public class CanonHandler : MonoBehaviour
             return angleX;
         }
     }
-
     float UpdateCanonRotationZ(Quaternion angle)
     {
         Vector3 currAngle = angle.eulerAngles;
@@ -140,9 +129,9 @@ public class CanonHandler : MonoBehaviour
     }
     public void LaunchProjectile()
     {
-        if (projectileQueue.Count != 0)
+        if (ProjectileQueue.Count != 0)
         {
-            GameObject projectileGO = projectileQueue.Dequeue();
+            GameObject projectileGO = ProjectileQueue.Dequeue();
             var rb = projectileGO.GetComponent<Rigidbody>();
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
@@ -161,11 +150,10 @@ public class CanonHandler : MonoBehaviour
         else
             Debug.Log("Projectile Queue is empty");   
 
-        if(projectileQueue.Count == 0)
+        if(ProjectileQueue.Count == 0)
         {
             CannonAimAssist.enabled = false;
         }
-
         // for debugging and testing cannon
         if (isTestFiring)
         {

@@ -3,14 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SandwhichHandler : MonoBehaviour
+public class SandwichHandler : MonoBehaviour
 {
-    [SerializeField] SandwhichSO _sandwhichSO;
-
-    public int toppingCount = 0;
     [Header("Toppings Check")]
     public bool isComplete = false;
     [SerializeField] float toppingHeight;
+    [SerializeField] SandwichSO _DebugSandwichSO;
+    public int toppingCount = 0;
 
     [Header("Topping Prefabs")]
     [SerializeField] GameObject _lettucePrefab;
@@ -21,7 +20,7 @@ public class SandwhichHandler : MonoBehaviour
     private Dictionary<string, GameObject> ToppingsDict  = new Dictionary<string, GameObject>();
     public List<string> CurrentToppings = new List<string>();
     public List<string> TestSandwhich = new List<string>();
-
+    
     public BreadSpawner BreadSpawner;
 
     public bool isOnGround = false;
@@ -30,13 +29,11 @@ public class SandwhichHandler : MonoBehaviour
     private void Awake()
     {
         LoadToppingsDict();
-
         //For testing - Add toppings based on scriptable object
-        if(_sandwhichSO != null)
+        if(_DebugSandwichSO != null)
         {
             LoadSandwhichSO();
         }
-
         if (_timer == null)
             _timer = GetComponent<Timer>();
     }
@@ -47,32 +44,19 @@ public class SandwhichHandler : MonoBehaviour
         ToppingsDict.Add("Ham", _hamPrefab);
         ToppingsDict.Add("Bread", _BreadToppingPrefab);
     }
-
+    //For testing - Add toppings based on scriptable object
     private void LoadSandwhichSO()
     {
-        //For testing - Add toppings based on scriptable object
-        if (_sandwhichSO.isLettuceOn)
-        {
-            GameObject lettucceGO = Instantiate(ToppingsDict["Lettuce"]);
-            AddTopping("Lettuce");
-        }
-        if (_sandwhichSO.isTomatoesOn)
-        {
-            GameObject tomatoesGO = Instantiate(ToppingsDict["Tomatoes"]);
-            AddTopping("Tomatoes");
-        }
-        if (_sandwhichSO.isHamOn)
-        {
-            GameObject hamGO = Instantiate(ToppingsDict["Ham"]);
-            AddTopping("Ham");
-        }
+        if (_DebugSandwichSO.ToppingsList == null)
+            _DebugSandwichSO.SetToppingList();
 
-        if (_sandwhichSO.isComplete)
+        foreach (string topping in _DebugSandwichSO.ToppingsList)
         {
-            GameObject breadGO = Instantiate(ToppingsDict["Bread"]);
-            AddTopping("Bread");
+            if (topping == "Complete")
+                AddTopping("Bread");
+            else
+                AddTopping(topping);            
         }
-
     }
     public void AddTopping(string toppingName)
     {
@@ -82,7 +66,8 @@ public class SandwhichHandler : MonoBehaviour
             if (toppingName == "Bread")
             {
                 isComplete = true;
-                BreadSpawner.breadBase = null;
+                if(_DebugSandwichSO == null)
+                    BreadSpawner.breadBase = null;
             }
             toppingCount++;
             GameObject topping = Instantiate(ToppingsDict[toppingName]);
@@ -92,29 +77,38 @@ public class SandwhichHandler : MonoBehaviour
             topping.transform.localPosition = new Vector3(0, (toppingHeight * toppingCount), 0);            
         }
     }
-
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
-            if(!isOnGround)
+            if (!isOnGround)
+            {
+                isOnGround = true;
                 _timer.StartTimer(6f);
+            }                
         }
         else if (other.gameObject.CompareTag("Building"))
         {
-            DestroySandwhich();
+            ResetSandwich();
         }
     }
-
     public void PickedUp()
     {
         _timer.stopTimer();
         isOnGround = false;
     }
-
-    public void DestroySandwhich()
+    public void ResetSandwich()
     {
         BreadSpawner.breadBase = null;
-        Destroy(this.gameObject);
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.useGravity = true;
+        CurrentToppings.Clear();
+        toppingCount = 0;
+        isComplete = false;
+        foreach (Transform child in this.transform)
+            GameObject.Destroy(child.gameObject);
+        this.gameObject.SetActive(false);
     }
 }

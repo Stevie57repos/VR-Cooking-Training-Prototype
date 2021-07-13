@@ -5,12 +5,12 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class BreadBaseGrabHandler : XRGrabInteractable
 {
-    SandwhichHandler sandwhichHandler;
+    SandwichHandler sandwhichHandler;
 
     protected override void Awake()
     {
         base.Awake();
-        sandwhichHandler = GetComponent<SandwhichHandler>();
+        sandwhichHandler = GetComponent<SandwichHandler>();
     }
 
     protected override void OnSelectEntered(SelectEnterEventArgs args)

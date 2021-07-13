@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class CanonLoader : MonoBehaviour
+public class CannonLoader : MonoBehaviour
 {
-    public CanonHandler Canon;
+    public CannonHandler Canon;
     [SerializeField] AudioSource _canonLoader;
     [SerializeField] AudioClip _LoadCanonClip;
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.GetComponent<CanonProjectile>())
+        if (other.gameObject.GetComponent<CannonProjectile>())
         {
             Canon.AddToQueue(other.gameObject);
             _canonLoader.PlayOneShot(_LoadCanonClip);
