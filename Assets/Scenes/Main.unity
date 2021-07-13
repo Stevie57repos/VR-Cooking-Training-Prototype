@@ -6105,7 +6105,7 @@ MonoBehaviour:
   screenFade: {fileID: 1514736939}
   currentScene:
     m_Handle: 0
-  levelDuration: 85
+  levelDuration: 50
   _timer: {fileID: 1750758938}
   GateAnimator: {fileID: 490799219}
   StartButton: {fileID: 11400000, guid: 733251afb5ec71f40b74742e74e8e168, type: 2}
