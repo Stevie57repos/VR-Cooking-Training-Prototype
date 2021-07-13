@@ -6,7 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class ToppingsSpawner : XRBaseInteractable
 {
-    public GameObject toppingPrefab = null;
+    public GameObject ToppingPrefab = null;
     [SerializeField] private AudioSource _toppingAudioSource;
     [SerializeField] private AudioClip _clip;
     [SerializeField] private List<GameObject> _toppingObjectPool = new List<GameObject>();
@@ -21,7 +21,6 @@ public class ToppingsSpawner : XRBaseInteractable
         _levelLoaded.GameManagerEvent += CreateToppingObjectPool;
         _EndLevelLoaded.GameManagerEvent += ClearObjectPool;
     }
-
     protected override void OnDisable()
     {      
         selectEntered.RemoveListener(CreateAndSelectTopping);
@@ -44,7 +43,7 @@ public class ToppingsSpawner : XRBaseInteractable
     {
         for(int i = 0; i < _objectPoolAmount; i++)
         {
-            GameObject toppingGO = Instantiate(toppingPrefab);
+            GameObject toppingGO = Instantiate(ToppingPrefab);
             toppingGO.SetActive(false);
             _toppingObjectPool.Add(toppingGO);
         }

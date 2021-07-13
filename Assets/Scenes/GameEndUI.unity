@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1c10033eba81db4493b81f356f88356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startButton: {fileID: 11400000, guid: 733251afb5ec71f40b74742e74e8e168, type: 2}
+  StartButton: {fileID: 11400000, guid: 733251afb5ec71f40b74742e74e8e168, type: 2}
   QuitButton: {fileID: 11400000, guid: c30eff0a21e10354abb7226a14ddf36f, type: 2}
 --- !u!1 &247260366
 GameObject:
@@ -424,8 +424,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0698e05c7b4d61e4f9e1b934789f8fa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startButton: {fileID: 0}
-  QuitButton: {fileID: 0}
+  StartButton: {fileID: 11400000, guid: 733251afb5ec71f40b74742e74e8e168, type: 2}
+  QuitButton: {fileID: 11400000, guid: c30eff0a21e10354abb7226a14ddf36f, type: 2}
   _playerScore: {fileID: 11400000, guid: d4b21b6bbb3d4544187a4ed1c2c1e8e7, type: 2}
   scoreBox: {fileID: 1882217467}
 --- !u!114 &481090305

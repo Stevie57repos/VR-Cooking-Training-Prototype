@@ -20,7 +20,7 @@ namespace GameManagerNameSpace
         public Animator GateAnimator;
 
         [Header("Events")]
-        [SerializeField] private GameManagerEventChannelSO Startbutton;
+        [SerializeField] private GameManagerEventChannelSO StartButton;
         [SerializeField] private GameManagerEventChannelSO QuitButton;
         [SerializeField] private GameManagerEventChannelSO LevelLoaded;
         [SerializeField] private GameManagerEventChannelSO EndLevelLoaded;
@@ -32,13 +32,13 @@ namespace GameManagerNameSpace
         public AudioEventChannelSO CustomerEffects;
         private void OnEnable()
         {
-            Startbutton.GameManagerEvent += LoadLevelAsync;
+            StartButton.GameManagerEvent += LoadLevelAsync;
             QuitButton.GameManagerEvent += QuitGame;
             CustomerEffects.AudioManagerEvent += PlayCustomerAudioEffect;
         }
         private void OnDisable()
         {
-            Startbutton.GameManagerEvent -= LoadLevelAsync;
+            StartButton.GameManagerEvent -= LoadLevelAsync;
             QuitButton.GameManagerEvent -= QuitGame;
             CustomerEffects.AudioManagerEvent -= PlayCustomerAudioEffect;
         }

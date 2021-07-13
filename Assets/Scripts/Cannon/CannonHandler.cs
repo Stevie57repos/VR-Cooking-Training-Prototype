@@ -23,11 +23,16 @@ public class CannonHandler : MonoBehaviour
     [Header("Debugging/Testing ")]
     public bool isTestFiring = false;
     public GameObject sandwhichTestFiring;
-    public GameManagerEventChannelSO fireCanon;
+    
+    [Header("Event Channel")]
+    [SerializeField] private GameManagerEventChannelSO fireCanon;
+    [SerializeField] private GameManagerEventChannelSO levelLoad;
 
     [Header("Audio")]
-    [SerializeField] AudioSource _canonAudioSource;
-    [SerializeField] AudioClip _ExplosionClip;
+    [SerializeField] private AudioSource _canonAudioSource;
+    [SerializeField] private AudioClip _ExplosionClip;
+
+
     private void Awake()
     {
         _leverX.transform.rotation = Quaternion.identity;
@@ -37,10 +42,20 @@ public class CannonHandler : MonoBehaviour
     private void OnEnable()
     {
         fireCanon.GameManagerEvent += LaunchProjectile;
+        levelLoad.GameManagerEvent += ClearCanonQueue;
     }
+
+
+
     private void OnDisable()
     {
         fireCanon.GameManagerEvent -= LaunchProjectile;
+        levelLoad.GameManagerEvent -= ClearCanonQueue;
+    }
+
+    private void ClearCanonQueue()
+    {
+        ProjectileQueue.Clear();
     }
 
     private void Start()

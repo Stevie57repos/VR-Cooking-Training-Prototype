@@ -3,13 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
-
 public class BreadSpawner : ToppingsSpawner
 {
     public GameObject BreadBasePrefab;
-    public SandwichHandler breadBase ;
-    [SerializeField] private List<GameObject> _BreadBasePool = new List<GameObject>();
-
+    public SandwichHandler BreadBase ;
+    [SerializeField] private List<GameObject> _breadBasePool = new List<GameObject>();
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -25,12 +23,11 @@ public class BreadSpawner : ToppingsSpawner
     }
     private void ClearBreadBasePool()
     {
-        _BreadBasePool.Clear();
+        _breadBasePool.Clear();
     }
     protected override void Awake()
     {
         base.Awake();
-        //CreateBreadBasePool();     
     }
     private void CreateBreadBasePool()
     {
@@ -38,12 +35,12 @@ public class BreadSpawner : ToppingsSpawner
         {
             GameObject breadBaseGO = Instantiate(BreadBasePrefab);
             breadBaseGO.SetActive(false);
-            _BreadBasePool.Add(breadBaseGO);
+            _breadBasePool.Add(breadBaseGO);
         }
     }
     protected override void CreateAndSelectTopping(SelectEnterEventArgs args)
     {
-        if(breadBase == null)
+        if(BreadBase == null)
         {
             CreateAndSelectBreadBase(args);
         }
@@ -53,21 +50,21 @@ public class BreadSpawner : ToppingsSpawner
     private void CreateAndSelectBreadBase(SelectEnterEventArgs args)
     {
         GameObject breadBaseGO = RetrieveBreadBase(args.interactor.transform);
-        breadBase = breadBaseGO.GetComponent<SandwichHandler>();
-        breadBase.BreadSpawner = this;    
+        BreadBase = breadBaseGO.GetComponent<SandwichHandler>();
+        BreadBase.BreadSpawner = this;    
         XRGrabInteractable breadBaseGrab = breadBaseGO.GetComponent<XRGrabInteractable>();
         interactionManager.ForceSelect(args.interactor, breadBaseGrab);
     }
     private GameObject RetrieveBreadBase(Transform orientation)
     {
-        for (int i = 0; i < _BreadBasePool.Count; i++)
+        for (int i = 0; i < _breadBasePool.Count; i++)
         {
-            if (!_BreadBasePool[i].activeInHierarchy)
+            if (!_breadBasePool[i].activeInHierarchy)
             {
-                _BreadBasePool[i].transform.position = orientation.position;
-                _BreadBasePool[i].transform.rotation = orientation.rotation;
-                _BreadBasePool[i].SetActive(true);
-                return _BreadBasePool[i];
+                _breadBasePool[i].transform.position = orientation.position;
+                _breadBasePool[i].transform.rotation = orientation.rotation;
+                _breadBasePool[i].SetActive(true);
+                return _breadBasePool[i];
             }
             else
                 Debug.Log($"Nothing left in the pool");

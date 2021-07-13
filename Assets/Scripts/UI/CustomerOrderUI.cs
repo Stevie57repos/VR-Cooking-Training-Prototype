@@ -6,36 +6,36 @@ using TMPro;
 public class CustomerOrderUI : MonoBehaviour
 {
     public bool isOrderUp = false;
-    [SerializeField] Queue<Customer> _customerQueue = new Queue<Customer>();
+    [SerializeField] private Queue<Customer> _customerQueue = new Queue<Customer>();
 
     public TextMeshProUGUI IngredientsBox;
-    public TextMeshProUGUI scoreBox;
+    public TextMeshProUGUI ScoreBox;
 
-    public PlayerScore PlayerScoreSO;
+    [SerializeField] private PlayerScore _playerScoreSO;
 
     private void Awake()
     {
         IngredientsBox = GetComponent<TextMeshProUGUI>();
         if (IngredientsBox == null)
             IngredientsBox = GameObject.FindGameObjectWithTag("IngredientsText").GetComponent<TextMeshProUGUI>();
-        scoreBox = GetComponent<TextMeshProUGUI>();
-        if (scoreBox == null)
-            scoreBox = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
-        PlayerScoreSO.ScoreUI = this;
+        ScoreBox = GetComponent<TextMeshProUGUI>();
+        if (ScoreBox == null)
+            ScoreBox = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
+        _playerScoreSO.ScoreUI = this;
     }
     public void ChangeScore(int number)
     {
-        PlayerScoreSO.Score += number;
+        _playerScoreSO.Score += number;
         InsertScore();
     }
     void InsertScore()
     {
-        if(scoreBox == null)
+        if(ScoreBox == null)
         {
             Debug.Log("scoreboxGO is null ");
             return;
         }      
-        scoreBox.text = $"<b><u>Score</b></u><br> ${PlayerScoreSO.Score}.00";
+        ScoreBox.text = $"<b><u>Score</b></u><br> ${_playerScoreSO.Score}.00";
     }
     public void DisplayOrder(Customer customer)
     {      

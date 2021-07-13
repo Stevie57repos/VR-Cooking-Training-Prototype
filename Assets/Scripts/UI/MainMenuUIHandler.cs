@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class MainMenuUIHandler : MonoBehaviour
 {
-    public GameManagerEventChannelSO startButton;
+    public GameManagerEventChannelSO StartButton;
     public GameManagerEventChannelSO QuitButton;
     public void StartButtonClicked()
     {
-        startButton.RaiseEvent();
+        StartButton.RaiseEvent();
     }
     public void QuitButtonClicked()
     {

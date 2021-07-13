@@ -7,13 +7,10 @@ public enum ToppingType { Lettuce, Tomatoes, Ham, Bread, Cheese }
 
 public class SandwichToppingHandler : XRGrabInteractable
 {
-    public ToppingType myType;
-    SandwichHandler mySandwhichHandler;
-
+    public ToppingType MyType;
     protected override void Awake()
     {
         base.Awake();
-        mySandwhichHandler = GetComponent<SandwichHandler>();
     }
 
     bool isHeld = false;
@@ -27,7 +24,6 @@ public class SandwichToppingHandler : XRGrabInteractable
         base.OnSelectExited(args);
         isHeld = false;
     }
-
     private void OnCollisionEnter(Collision other)
     {
         if (!isHeld)
@@ -35,8 +31,7 @@ public class SandwichToppingHandler : XRGrabInteractable
             if (other.gameObject.GetComponent<SandwichHandler>())
             {   
                 SandwichHandler otherSandwhichHandler = other.gameObject.GetComponent<SandwichHandler>();
-                otherSandwhichHandler.AddTopping(myType.ToString());
-                //Destroy(this.gameObject);
+                otherSandwhichHandler.AddTopping(MyType.ToString());
                 this.gameObject.SetActive(false);
             }
         }

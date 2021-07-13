@@ -9,7 +9,7 @@ public class SandwichHandler : MonoBehaviour
     public bool isComplete = false;
     [SerializeField] float _toppingHeight;
     [SerializeField] SandwichSO _DebugSandwichSO;
-    public int toppingCount = 0;
+    private int toppingCount = 0;
 
     [Header("Topping Prefabs")]
     [SerializeField] GameObject _lettucePrefab;
@@ -67,7 +67,7 @@ public class SandwichHandler : MonoBehaviour
             {
                 isComplete = true;
                 if(_DebugSandwichSO == null)
-                    BreadSpawner.breadBase = null;
+                    BreadSpawner.BreadBase = null;
             }
             toppingCount++;
             GameObject topping = Instantiate(ToppingsDict[toppingName]);
@@ -99,7 +99,7 @@ public class SandwichHandler : MonoBehaviour
     }
     public void ResetSandwich()
     {
-        BreadSpawner.breadBase = null;
+        BreadSpawner.BreadBase = null;
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;

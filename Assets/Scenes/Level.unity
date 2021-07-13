@@ -1366,6 +1366,7 @@ MonoBehaviour:
   - {fileID: 761353004}
   - {fileID: 1504696656}
   _availableSpawnLocations: 
+  _usedSpawnLocations: 
   _playerScoreSO: {fileID: 11400000, guid: d4b21b6bbb3d4544187a4ed1c2c1e8e7, type: 2}
 --- !u!4 &998212137
 Transform:
@@ -8069,6 +8070,10 @@ PrefabInstance:
       value: UI Canvas
       objectReference: {fileID: 0}
     - target: {fileID: 6886217644251078557, guid: efb7a543135a1374da74608fd1d78f7c, type: 3}
+      propertyPath: ScoreBox
+      value: 
+      objectReference: {fileID: 1097613770}
+    - target: {fileID: 6886217644251078557, guid: efb7a543135a1374da74608fd1d78f7c, type: 3}
       propertyPath: scoreBox
       value: 
       objectReference: {fileID: 1097613770}
@@ -8084,6 +8089,10 @@ PrefabInstance:
       propertyPath: IngredientsBox
       value: 
       objectReference: {fileID: 945337703}
+    - target: {fileID: 6886217644251078557, guid: efb7a543135a1374da74608fd1d78f7c, type: 3}
+      propertyPath: _playerScoreSO
+      value: 
+      objectReference: {fileID: 11400000, guid: d4b21b6bbb3d4544187a4ed1c2c1e8e7, type: 2}
     - target: {fileID: 6886217644251078559, guid: efb7a543135a1374da74608fd1d78f7c, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
