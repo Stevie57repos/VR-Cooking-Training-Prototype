@@ -1,7 +1,9 @@
 # VR Food Truck Game Prototype
 
 ## Game Description 
-This is a VR game where you build sandwiches and deliver them to starving customers using a cannon on a food truck. 
+This is a VR game where you build sandwiches and deliver them to starving customers using a cannon on a food truck.
+
+**Click on the image below to watch a YouTube Gameplay Trailer**
 
 [![Header Image](https://github.com/stevie57/VR-Cooking-Training-Prototype/blob/main/Assets/Textures/Sandwich%20image.png)](https://www.youtube.com/watch?v=idGoXzuUl7Y)
 
