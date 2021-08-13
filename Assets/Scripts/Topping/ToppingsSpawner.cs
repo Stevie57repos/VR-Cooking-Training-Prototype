@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+[SelectionBase]
 public class ToppingsSpawner : XRBaseInteractable
 {
     public GameObject ToppingPrefab = null;

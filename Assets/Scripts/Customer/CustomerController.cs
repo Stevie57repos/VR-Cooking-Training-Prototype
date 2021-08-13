@@ -70,15 +70,12 @@ public class CustomerController : MonoBehaviour
         else
             _usedSpawnLocations.Add(randomLocation);
     }
-
     private int RandomNumber(int count)
     {
         int max = count;
         int number = UnityEngine.Random.Range(0, max);
         return number;
     }
-
-
     public void ActivateCustomer()
     {
         if(_customerQueue.Count == 0)

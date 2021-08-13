@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[SelectionBase]
 public class SandwichHandler : MonoBehaviour
 {
     [Header("Toppings Check")]
@@ -60,6 +61,16 @@ public class SandwichHandler : MonoBehaviour
     }
     public void AddTopping(string toppingName)
     {
+        if(toppingName == "BreadBase")
+        {
+            GameObject topping = Instantiate(ToppingsDict["Bread"]);
+            topping.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            topping.transform.parent = this.gameObject.transform;
+            topping.transform.localPosition = new Vector3(0, 0, 0);
+            topping.transform.rotation = new Quaternion(0,0,0,0);
+            return;
+        }
+
         if (!isComplete)
         {
             CurrentToppings.Add(toppingName);
@@ -73,7 +84,8 @@ public class SandwichHandler : MonoBehaviour
             GameObject topping = Instantiate(ToppingsDict[toppingName]);
             topping.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
             topping.SetActive(true);
-            topping.transform.parent = this.gameObject.transform;   
+            topping.transform.parent = this.gameObject.transform;
+            topping.transform.rotation = Quaternion.identity;
             topping.transform.localPosition = new Vector3(0, (_toppingHeight * toppingCount), 0);            
         }
     }
@@ -81,6 +93,7 @@ public class SandwichHandler : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ground"))
         {
+            Debug.Log($"ground occured");
             if (!isOnGround)
             {
                 isOnGround = true;
@@ -89,7 +102,12 @@ public class SandwichHandler : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Building"))
         {
+            Debug.Log($"Building");
             ResetSandwich();
+        }
+        else
+        {
+            Debug.Log($"I just hit something and it is {other.gameObject.name}");
         }
     }
     public void PickedUp()
@@ -99,6 +117,7 @@ public class SandwichHandler : MonoBehaviour
     }
     public void ResetSandwich()
     {
+        Debug.Log("Resetsandwhich called");
         BreadSpawner.BreadBase = null;
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.velocity = Vector3.zero;
@@ -109,6 +128,7 @@ public class SandwichHandler : MonoBehaviour
         isComplete = false;
         foreach (Transform child in this.transform)
             GameObject.Destroy(child.gameObject);
+        AddTopping("BreadBase");
         this.gameObject.SetActive(false);
     }
 }

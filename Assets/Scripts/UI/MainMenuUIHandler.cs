@@ -14,6 +14,4 @@ public class MainMenuUIHandler : MonoBehaviour
     {
         QuitButton.RaiseEvent();
     }
-
-
 }

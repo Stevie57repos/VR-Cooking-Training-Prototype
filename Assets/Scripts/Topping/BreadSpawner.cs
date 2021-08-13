@@ -8,11 +8,19 @@ public class BreadSpawner : ToppingsSpawner
     public GameObject BreadBasePrefab;
     public SandwichHandler BreadBase ;
     [SerializeField] private List<GameObject> _breadBasePool = new List<GameObject>();
+    bool canSpawn = true;
+
+    [Header("Debug Settings")]
+    [SerializeField] private bool isDebug;
+    [SerializeField] private int debugPoolAmount;
+
     protected override void OnEnable()
     {
         base.OnEnable();
         _levelLoaded.GameManagerEvent += CreateBreadBasePool;
         _EndLevelLoaded.GameManagerEvent += ClearBreadBasePool;
+        if (isDebug)
+            CreateBreadBasePool(debugPoolAmount);
     }
 
     protected override void OnDisable()
@@ -32,6 +40,15 @@ public class BreadSpawner : ToppingsSpawner
     private void CreateBreadBasePool()
     {
         for(int i = 0; i < _objectPoolAmount; i ++)
+        {
+            GameObject breadBaseGO = Instantiate(BreadBasePrefab);
+            breadBaseGO.SetActive(false);
+            _breadBasePool.Add(breadBaseGO);
+        }
+    }
+    private void CreateBreadBasePool(int debugAmount)
+    {
+        for (int i = 0; i < debugAmount; i++)
         {
             GameObject breadBaseGO = Instantiate(BreadBasePrefab);
             breadBaseGO.SetActive(false);

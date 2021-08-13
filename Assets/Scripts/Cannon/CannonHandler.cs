@@ -13,6 +13,8 @@ public class CannonHandler : MonoBehaviour
     [SerializeField] private Transform _spawnLocation;
     [SerializeField] private GameObject _projectilePrefab;
     [SerializeField] private float speed;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private ParticleSystem _particleSystem;
     public Queue<GameObject> ProjectileQueue = new Queue<GameObject>();
 
     [Header("Cannon Visual Aim Assist")]
@@ -31,8 +33,6 @@ public class CannonHandler : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioSource _canonAudioSource;
     [SerializeField] private AudioClip _ExplosionClip;
-
-
     private void Awake()
     {
         _leverX.transform.rotation = Quaternion.identity;
@@ -41,23 +41,19 @@ public class CannonHandler : MonoBehaviour
     }
     private void OnEnable()
     {
-        fireCanon.GameManagerEvent += LaunchProjectile;
+        fireCanon.GameManagerEvent += TriggerAnimation;
         levelLoad.GameManagerEvent += ClearCanonQueue;
     }
 
-
-
     private void OnDisable()
     {
-        fireCanon.GameManagerEvent -= LaunchProjectile;
+        fireCanon.GameManagerEvent -= TriggerAnimation;
         levelLoad.GameManagerEvent -= ClearCanonQueue;
     }
-
     private void ClearCanonQueue()
     {
         ProjectileQueue.Clear();
     }
-
     private void Start()
     {
         CannonAimAssist.enabled = false;
@@ -71,7 +67,6 @@ public class CannonHandler : MonoBehaviour
         ProjectileQueue.Enqueue(projectile);
         projectile.SetActive(false);
     }
-
     void AimAssist()
     {
         CannonAimAssist.enabled = true;
@@ -85,6 +80,7 @@ public class CannonHandler : MonoBehaviour
             if (hit.collider)
             {
                 CannonAimAssist.SetPosition(1, hit.point);
+                Debug.Log($"raycast has hit {hit.collider.gameObject.name}");
             }
         }
         else
@@ -144,6 +140,7 @@ public class CannonHandler : MonoBehaviour
     }
     public void LaunchProjectile()
     {
+        TriggerParticles();
         if (ProjectileQueue.Count != 0)
         {
             GameObject projectileGO = ProjectileQueue.Dequeue();
@@ -155,12 +152,16 @@ public class CannonHandler : MonoBehaviour
             projectileGO.transform.position = _spawnLocation.transform.position;
             projectileGO.SetActive(true);
 
-            Vector3 startPos = projectileGO.transform.position;
+            Vector3 startPos = _spawnLocation.transform.position;
             Vector3 endPos = EndLine.transform.position;
             Vector3 direction = endPos - startPos;
             rb.AddForce(direction * speed);
 
             _canonAudioSource.PlayOneShot(_ExplosionClip);
+
+            //SandwichHandler sandwhichHandler = projectileGO.GetComponentInChildren<SandwichHandler>();
+            Timer sandwichTimer = projectileGO.GetComponentInChildren<Timer>();
+            sandwichTimer.StartTimer(3f);
         }
         else
             Debug.Log("Projectile Queue is empty");   
@@ -179,5 +180,13 @@ public class CannonHandler : MonoBehaviour
             rb.useGravity = false;
             rb.AddForce(transform.up * speed);
         }
+    }
+    public void TriggerAnimation()
+    {
+        _animator.SetTrigger("Fire");
+    }
+    private void TriggerParticles()
+    {
+        _particleSystem.Play();
     }
 }
